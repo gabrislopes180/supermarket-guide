@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animated";
+@import "@heroui/styles";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: "font", sans-serif;
+  --font-mono: "monospace", monospace;
+}

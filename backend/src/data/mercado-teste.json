@@ -1,0 +1,29 @@
+{
+  "mercado_id": "mercado_mock",
+  "nome": "Mercado de Teste",
+  "layout": [
+    {
+      "id": "entrada",
+      "tipo": "ponto_referencia",
+      "conexoes": ["corredor_1"]
+    },
+    {
+      "id": "corredor_1",
+      "tipo": "corredor",
+      "conexoes": ["entrada", "corredor_2"],
+      "conteudo": {
+        "lado_direito": { "categoria_geral": "Leites e Frios" },
+        "lado_esquerdo": { "categoria_geral": "Carnes e Açougue" }
+      }
+    },
+    {
+      "id": "corredor_2",
+      "tipo": "corredor",
+      "conexoes": ["corredor_1"],
+      "conteudo": {
+        "lado_direito": { "categoria_geral": "Higiene e Sabonetes" },
+        "lado_esquerdo": { "categoria_geral": "Limpeza" }
+      }
+    }
+  ]
+}

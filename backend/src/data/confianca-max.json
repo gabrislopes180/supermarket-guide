@@ -1,0 +1,837 @@
+{
+  "mercado": "Supermercado Principal",
+  "versao": "3.0",
+
+  "orientacao_geral": {
+    "eixo_x": "Horizontal. Direita (x alto) = ENTRADA. Esquerda (x baixo) = fundo da loja (Bebidas Frias).",
+    "eixo_y": "Vertical. Sul (y alto) = ENTRADA/CAIXAS. Norte (y baixo) = FUNDO DA LOJA.",
+    "entrada": "Lado DIREITO da loja, sul. O usuário entra e avança no sentido sul → norte.",
+    "numeracao_corredores": "C1 é o mais próximo da entrada (direita). Números crescem da direita para a esquerda.",
+    "resumo_visual": "FUNDO(norte): Açougue|FLV|Padaria|Hortifruti / Corredores Altos: ...C10H|C9H|...|C1H / AVENIDA CENTRAL / Corredores Baixos: ...C10L|C9L|...|C3L|[HORT] / AVENIDA DOS CAIXAS / ENTRADA(sul/direita)"
+  },
+
+  "zonas": {
+    "avenida_caixas": {
+      "descricao": "Corredor horizontal na base (sul). Liga entrada a todos os corredores baixos.",
+      "conecta": [
+        "entrada",
+        "todos_corredores_baixos_saida_sul",
+        "lateral_para_avenida_central"
+      ]
+    },
+    "avenida_central": {
+      "descricao": "Corredor horizontal no meio. Separa corredores altos (norte) dos baixos (sul). Contém ilhas.",
+      "conecta": [
+        "todos_corredores_altos_saida_sul",
+        "todos_corredores_baixos_saida_norte",
+        "ilhas"
+      ],
+      "ilhas": ["ilha_japonesa", "ilha_congelados"]
+    },
+    "area_fundo": {
+      "descricao": "Zona norte. Saída norte dos corredores altos dá para cá.",
+      "setores": [
+        "acougue_carne",
+        "acougue_peixe",
+        "acougue_frios",
+        "padaria",
+        "prontos_comer",
+        "hortifruti"
+      ]
+    }
+  },
+
+  "corredores": {
+    "regras_gerais": [
+      "Todo corredor tem 2 saídas.",
+      "Altos (H): saída sul = Avenida Central / saída norte = área do fundo.",
+      "Baixos (L): saída sul = Avenida dos Caixas / saída norte = Avenida Central.",
+      "C1L e C2L não existem — espaço é o Hortifruti. Baixos começam no C3L.",
+      "C3L: lado direito faz divisa com ilha japonesa, sem prateleira nesse lado."
+    ],
+    "altos": {
+      "C1H": {
+        "posicao": "Primeiro corredor alto, mais próximo da entrada (direita).",
+        "saida_sul": "Avenida Central",
+        "saida_norte": "Área do fundo",
+        "lado_direito": ["Iogurtes", "Danones"],
+        "lado_esquerdo": ["Manteigas", "Requeijões"],
+        "acesso_da_entrada": "Entrada → Avenida dos Caixas → Avenida Central → virar à direita → C1H imediatamente à direita."
+      },
+      "C2H": {
+        "posicao": "Segundo corredor alto.",
+        "saida_sul": "Avenida Central",
+        "saida_norte": "Área do fundo",
+        "lado_direito": ["Refrigerados (massas, sucos naturais)"],
+        "lado_esquerdo": ["Sorvetes"],
+        "acesso_da_entrada": "Entrada → Avenida dos Caixas → Avenida Central → virar à direita → passar C1H → C2H."
+      },
+      "C3H": {
+        "posicao": "Terceiro corredor alto.",
+        "saida_sul": "Avenida Central",
+        "saida_norte": "Área do fundo",
+        "lado_direito": ["Arroz", "Feijão"],
+        "lado_esquerdo": ["Farinha", "Farináceos"],
+        "acesso_da_entrada": "Entrada → Avenida dos Caixas → Avenida Central → virar à direita → passar C1H e C2H → C3H."
+      },
+      "C4H": {
+        "posicao": "Quarto corredor alto.",
+        "saida_sul": "Avenida Central",
+        "saida_norte": "Área do fundo",
+        "lado_direito": ["Mistura para bolo", "Gelatina", "Misturas em geral"],
+        "lado_esquerdo": ["Balas", "Doces embalados", "Confeitos"],
+        "acesso_da_entrada": "Entrada → Avenida dos Caixas → Avenida Central → seguir à esquerda contando corredores → C4H."
+      },
+      "C5H": {
+        "posicao": "Quinto corredor alto.",
+        "saida_sul": "Avenida Central",
+        "saida_norte": "Área do fundo",
+        "lado_direito": ["Chocolates", "Achocolatados"],
+        "lado_esquerdo": ["Salgadinhos", "Petiscos", "Snacks"],
+        "acesso_da_entrada": "Entrada → Avenida dos Caixas → Avenida Central → contar 5 corredores da direita."
+      },
+      "C6H": {
+        "posicao": "Sexto corredor alto.",
+        "saida_sul": "Avenida Central",
+        "saida_norte": "Área do fundo",
+        "lado_direito": [
+          "Massas",
+          "Macarrão",
+          "Produtos cortados/fatiados embalados"
+        ],
+        "lado_esquerdo": ["Massas (continuação)", "Molhos prontos para massa"],
+        "acesso_da_entrada": "Entrada → Avenida dos Caixas → Avenida Central → contar 6 corredores da direita."
+      },
+      "C7H": {
+        "posicao": "Sétimo corredor alto.",
+        "saida_sul": "Avenida Central",
+        "saida_norte": "Área do fundo",
+        "lado_direito": [
+          "Eletrônicos",
+          "Pilhas",
+          "Artigos de escritório",
+          "Brinquedos pequenos"
+        ],
+        "lado_esquerdo": [
+          "Calçados",
+          "Meias",
+          "Artigos diversos não-alimentícios"
+        ],
+        "acesso_da_entrada": "Entrada → Avenida dos Caixas → Avenida Central → contar 7 corredores da direita."
+      },
+      "C8H": {
+        "posicao": "Oitavo corredor alto.",
+        "saida_sul": "Avenida Central",
+        "saida_norte": "Área do fundo",
+        "lado_direito": [
+          "Água sanitária",
+          "Desinfetante",
+          "Produtos de limpeza pesada",
+          "Amaciante grande"
+        ],
+        "lado_esquerdo": ["Limpeza (continuação)"],
+        "acesso_da_entrada": "Entrada → Avenida dos Caixas → Avenida Central → contar 8 corredores da direita."
+      },
+      "C9H": {
+        "posicao": "Nono corredor alto.",
+        "saida_sul": "Avenida Central",
+        "saida_norte": "Área do fundo",
+        "lado_direito": ["Frango congelado", "Carnes congeladas embaladas"],
+        "lado_esquerdo": ["Congelados (continuação)"],
+        "acesso_da_entrada": "Entrada → Avenida dos Caixas → Avenida Central → contar 9 corredores da direita."
+      },
+      "C10H": {
+        "posicao": "Décimo corredor alto, mais distante da entrada (esquerda).",
+        "saida_sul": "Avenida Central",
+        "saida_norte": "Área do fundo",
+        "lado_direito": ["Bebidas geladas (garrafas)", "Cervejas geladas"],
+        "lado_esquerdo": ["Bebidas geladas (continuação)"],
+        "acesso_da_entrada": "Entrada → Avenida dos Caixas → Avenida Central → seguir até o último corredor à esquerda."
+      }
+    },
+    "baixos": {
+      "C3L": {
+        "posicao": "Primeiro corredor baixo (direita). C1L e C2L não existem.",
+        "saida_sul": "Avenida dos Caixas",
+        "saida_norte": "Avenida Central",
+        "lado_direito": ["Sem prateleira"],
+        "lado_esquerdo": ["Temperos (Curry, sal, etc)"],
+        "observacao": "Lado direito faz divisa com ilha japonesa — sem prateleira nesse lado.",
+        "acesso_da_entrada": "Entrada → Avenida dos Caixas → primeiro corredor baixo à direita."
+      },
+      "C4L": {
+        "posicao": "Segundo corredor baixo.",
+        "saida_sul": "Avenida dos Caixas",
+        "saida_norte": "Avenida Central",
+        "lado_direito": ["Café em pó", "Café solúvel"],
+        "lado_esquerdo": [
+          "Chá",
+          "Leite em caixa",
+          "Creme de leite",
+          "Leite condensado"
+        ]
+      },
+      "C5L": {
+        "posicao": "Terceiro corredor baixo.",
+        "saida_sul": "Avenida dos Caixas",
+        "saida_norte": "Avenida Central",
+        "lado_direito": ["Bolacha sem recheio", "Biscoito salgado"],
+        "lado_esquerdo": [
+          "Bolacha com recheio",
+          "Biscoito doce",
+          "Biscoito recheado"
+        ]
+      },
+      "C6L": {
+        "posicao": "Quarto corredor baixo.",
+        "saida_sul": "Avenida dos Caixas",
+        "saida_norte": "Avenida Central",
+        "lado_direito": [
+          "Molho de tomate",
+          "Molhos em geral",
+          "Extrato de tomate"
+        ],
+        "lado_esquerdo": [
+          "Temperos",
+          "Ervas",
+          "Condimentos",
+          "Molhos especiais"
+        ]
+      },
+      "C7L": {
+        "posicao": "Quinto corredor baixo.",
+        "saida_sul": "Avenida dos Caixas",
+        "saida_norte": "Avenida Central",
+        "lado_direito": [
+          "Shampoo",
+          "Condicionador",
+          "Fraldas",
+          "Maquiagem",
+          "Absorventes"
+        ],
+        "lado_esquerdo": [
+          "Escovas de dente",
+          "Pasta de dente",
+          "Sabonetes",
+          "Desodorante",
+          "Chupeta",
+          "Higiene pessoal em geral"
+        ]
+      },
+      "C8L": {
+        "posicao": "Sexto corredor baixo.",
+        "saida_sul": "Avenida dos Caixas",
+        "saida_norte": "Avenida Central",
+        "lado_direito": [
+          "Amaciante",
+          "Tira-manchas",
+          "Lava-roupas",
+          "Sabão em pó"
+        ],
+        "lado_esquerdo": [
+          "Detergente",
+          "Desinfetante",
+          "Produtos de limpeza doméstica"
+        ]
+      },
+      "C9L": {
+        "posicao": "Sétimo corredor baixo.",
+        "saida_sul": "Avenida dos Caixas",
+        "saida_norte": "Avenida Central",
+        "lado_direito": [
+          "Vassoura",
+          "Esponja",
+          "Panos de prato",
+          "Utilidades domésticas"
+        ],
+        "lado_esquerdo": [
+          "Utilidades domésticas (continuação)",
+          "Baldes",
+          "Organizadores"
+        ]
+      },
+      "C10L": {
+        "posicao": "Oitavo corredor baixo, mais distante da entrada.",
+        "saida_sul": "Avenida dos Caixas",
+        "saida_norte": "Avenida Central",
+        "lado_direito": [
+          "Copos descartáveis",
+          "Guardanapos",
+          "Palito",
+          "Papel toalha",
+          "Descartáveis em geral"
+        ],
+        "lado_esquerdo": [
+          "Descartáveis (continuação)",
+          "Papel alumínio",
+          "Filme plástico"
+        ]
+      }
+    }
+  },
+
+  "geladeiras": {
+    "orientacao": "Verticais — percorrem toda a parede de norte a sul.",
+    "parede_direita": {
+      "fundo_norte": ["Iogurte", "Bebidas lácteas", "Sobremesas lácteas"],
+      "meio": ["Congelados de batata frita", "Congelados em geral"],
+      "sul_proxima_entrada": [
+        "Verduras",
+        "Alface",
+        "Brócolis",
+        "Rúcula",
+        "Folhas em geral"
+      ],
+      "acesso": "Caminhar pela parede direita da loja no sentido desejado (norte para iogurtes, sul para verduras)."
+    },
+    "parede_esquerda": {
+      "fundo_norte": ["Frango em bandeja", "Pão de alho"],
+      "restante_sul": [
+        "Bebidas frias",
+        "Refrigerantes gelados",
+        "Sucos gelados",
+        "Água gelada",
+        "Cerveja gelada"
+      ],
+      "acesso": "Caminhar pela parede esquerda. É o ponto mais distante da entrada — acessar pela Avenida dos Caixas ou Avenida Central até a parede esquerda."
+    }
+  },
+
+  "ilhas": {
+    "ilha_japonesa": {
+      "posicao": "Avenida Central, lado direito do C3L.",
+      "produtos": [
+        "Comida japonesa",
+        "Sushi",
+        "Temaki",
+        "Produtos japoneses embalados"
+      ]
+    },
+    "ilha_congelados": {
+      "posicao": "Avenida Central, região central.",
+      "produtos": [
+        "Nuggets",
+        "Hambúrguer congelado",
+        "Empanados",
+        "Congelados em geral"
+      ]
+    },
+    "ilha_frios": {
+      "posicao": "Área do fundo, próximo à padaria.",
+      "produtos": ["Frios fatiados", "Queijos", "Presunto", "Salame"]
+    },
+    "ilha_embutidos_suinos": {
+      "posicao": "Área do fundo.",
+      "produtos": ["Linguiça", "Salsicha", "Embutidos suínos"]
+    },
+    "ilha_embutidos_defumados": {
+      "posicao": "Área do fundo.",
+      "produtos": ["Calabresa", "Bacon", "Embutidos defumados"]
+    }
+  },
+
+  "area_fundo": {
+    "acougue_carne": {
+      "posicao": "Bloco norte, lado esquerdo.",
+      "produtos": [
+        "Carne bovina",
+        "Carne suína",
+        "Frango fresco",
+        "Carnes em geral"
+      ],
+      "acesso": "Subir qualquer corredor alto até o fim (saída norte)."
+    },
+    "acougue_peixe": {
+      "posicao": "Bloco norte.",
+      "produtos": ["Peixe fresco", "Frutos do mar", "Pescados"],
+      "acesso": "Subir qualquer corredor alto até o fim (saída norte)."
+    },
+    "acougue_frios": {
+      "posicao": "Bloco norte.",
+      "produtos": ["Frios", "Queijos frescos", "Embutidos frescos"],
+      "acesso": "Subir qualquer corredor alto até o fim (saída norte)."
+    },
+    "padaria": {
+      "posicao": "Bloco norte, centro.",
+      "produtos": [
+        "Pão francês",
+        "Bolo de confeitaria",
+        "Doces de confeitaria",
+        "Pão de queijo"
+      ],
+      "acesso": "Subir qualquer corredor alto até o fim (saída norte)."
+    },
+    "prontos_comer": {
+      "posicao": "Bloco norte, lado direito (grande).",
+      "produtos": [
+        "Marmitas",
+        "Salgados prontos",
+        "Lanches prontos",
+        "Comida pronta"
+      ],
+      "acesso": "Subir qualquer corredor alto até o fim (saída norte), lado direito."
+    },
+    "paes_industrializados": {
+      "posicao": "Bloco norte, área da padaria.",
+      "produtos": [
+        "Pão de forma",
+        "Pão de hot dog",
+        "Bolos industrializados",
+        "Doces caseiros embalados"
+      ],
+      "acesso": "Subir qualquer corredor alto até o fim (saída norte)."
+    },
+    "hortifruti": {
+      "posicao": "Canto direito do fundo. Ocupa onde seriam C1L e C2L.",
+      "produtos": ["Frutas", "Verduras frescas", "Legumes", "Temperos frescos"],
+      "acesso": "Avenida dos Caixas até o canto direito, ou descer C3L até a Avenida Central virando à direita."
+    }
+  },
+
+  "categorias_e_palavras_chave": {
+    "descricao": "Use esta seção para identificar a categoria de um produto quando o nome exato não estiver mapeado. Raciocine: qual categoria este produto pertence? Então localize pela categoria.",
+    "mapeamento": {
+      "salgadinhos_snacks": {
+        "corredor": "C5H",
+        "lado": "ESQ",
+        "exemplos_de_produtos": [
+          "Pringles",
+          "Cheetos",
+          "Doritos",
+          "Ruffles",
+          "Chips",
+          "Salgadinho de pacote",
+          "Snack",
+          "Pipoca embalada",
+          "Amendoim torrado embalado"
+        ]
+      },
+      "chocolates_doces": {
+        "corredor": "C5H",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Bis",
+          "Kit Kat",
+          "Snickers",
+          "Ferrero Rocher",
+          "Chocolate em barra",
+          "Trufas",
+          "Achocolatado em pó"
+        ]
+      },
+      "balas_confeitos": {
+        "corredor": "C4H",
+        "lado": "ESQ",
+        "exemplos_de_produtos": [
+          "Bala",
+          "Pirulito",
+          "Chiclete",
+          "Drops",
+          "Jujuba",
+          "Marshmallow"
+        ]
+      },
+      "biscoitos_sem_recheio": {
+        "corredor": "C5L",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Biscoito água e sal",
+          "Cream cracker",
+          "Biscoito integral",
+          "Maria",
+          "Maisena",
+          "Biscoito salgado"
+        ]
+      },
+      "biscoitos_com_recheio": {
+        "corredor": "C5L",
+        "lado": "ESQ",
+        "exemplos_de_produtos": [
+          "Oreo",
+          "Recheado",
+          "Bono",
+          "Trakinas",
+          "Passatempo"
+        ]
+      },
+      "massas_macarrao": {
+        "corredor": "C6H",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Macarrão",
+          "Espaguete",
+          "Penne",
+          "Parafuso",
+          "Lasanha seca",
+          "Macarrão instantâneo",
+          "Miojo"
+        ]
+      },
+      "molhos_tomate": {
+        "corredor": "C6L",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Molho de tomate",
+          "Extrato de tomate",
+          "Polpa de tomate",
+          "Catchup"
+        ]
+      },
+      "temperos_condimentos": {
+        "corredor": "C6L",
+        "lado": "ESQ",
+        "exemplos_de_produtos": [
+          "Sal",
+          "Pimenta",
+          "Orégano",
+          "Alho em pó",
+          "Caldo Knorr",
+          "Tempero pronto",
+          "Vinagre",
+          "Mostarda",
+          "Maionese"
+        ]
+      },
+      "arroz_feijao": {
+        "corredor": "C3H",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Arroz branco",
+          "Arroz integral",
+          "Feijão carioca",
+          "Feijão preto",
+          "Lentilha",
+          "Grão de bico"
+        ]
+      },
+      "farinhas_amidos": {
+        "corredor": "C3H",
+        "lado": "ESQ",
+        "exemplos_de_produtos": [
+          "Farinha de trigo",
+          "Amido de milho",
+          "Fubá",
+          "Farinha de rosca",
+          "Fermento em pó",
+          "Bicarbonato"
+        ]
+      },
+      "oleos_azeites": {
+        "corredor": "C3L",
+        "lado": "ESQ",
+        "exemplos_de_produtos": [
+          "Óleo de soja",
+          "Óleo de girassol",
+          "Azeite de oliva",
+          "Óleo de coco"
+        ]
+      },
+      "cafe_cha": {
+        "corredor": "C4L",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Café em pó",
+          "Café solúvel",
+          "Nescafé",
+          "3 Corações",
+          "Café em cápsula"
+        ]
+      },
+      "cha_leite": {
+        "corredor": "C4L",
+        "lado": "ESQ",
+        "exemplos_de_produtos": [
+          "Chá",
+          "Leite longa vida",
+          "Leite condensado",
+          "Creme de leite",
+          "Leite em pó",
+          "Achocolatado líquido"
+        ]
+      },
+      "misturas_bolo": {
+        "corredor": "C4H",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Mistura para bolo",
+          "Gelatina",
+          "Pudim",
+          "Cobertura para bolo",
+          "Granulado"
+        ]
+      },
+      "sucos_bebidas_nao_geladas": {
+        "corredor": "C2H",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Suco de caixinha",
+          "Suco em pó",
+          "Tang",
+          "Refresco",
+          "Água de coco caixinha",
+          "Isotônico embalado"
+        ]
+      },
+      "higiene_pessoal": {
+        "corredor": "C7L",
+        "lado": "ESQ",
+        "exemplos_de_produtos": [
+          "Shampoo",
+          "Condicionador",
+          "Sabonete",
+          "Desodorante",
+          "Escova de dente",
+          "Pasta de dente",
+          "Fio dental",
+          "Enxaguante bucal",
+          "Perfume",
+          "Hidratante corporal"
+        ]
+      },
+      "fraldas_bebe": {
+        "corredor": "C7L",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Fralda descartável",
+          "Lenço umedecido",
+          "Chupeta",
+          "Mamadeira",
+          "Absorvente",
+          "Maquiagem"
+        ]
+      },
+      "limpeza_roupas": {
+        "corredor": "C8L",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Sabão em pó",
+          "Lava-roupas líquido",
+          "Amaciante",
+          "Tira-manchas",
+          "Água sanitária para roupa"
+        ]
+      },
+      "limpeza_casa": {
+        "corredor": "C8L",
+        "lado": "ESQ",
+        "exemplos_de_produtos": [
+          "Detergente",
+          "Desinfetante",
+          "Multiuso",
+          "Limpa vidros",
+          "Esponja de aço",
+          "Cera de assoalho"
+        ]
+      },
+      "limpeza_pesada": {
+        "corredor": "C8H",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Água sanitária grande",
+          "Desinfetante galão",
+          "Cloro",
+          "Desentupidor químico"
+        ]
+      },
+      "utensilios_domesticos": {
+        "corredor": "C9L",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Vassoura",
+          "Rodo",
+          "Esponja de louça",
+          "Pano de prato",
+          "Luva de borracha",
+          "Balde"
+        ]
+      },
+      "descartaveis_papel": {
+        "corredor": "C10L",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Copo descartável",
+          "Prato descartável",
+          "Guardanapo",
+          "Papel toalha",
+          "Palito",
+          "Papel alumínio",
+          "Filme plástico",
+          "Saco de lixo"
+        ]
+      },
+      "eletronicos_brinquedos": {
+        "corredor": "C7H",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Pilha",
+          "Carregador",
+          "Fone de ouvido básico",
+          "Brinquedo pequeno",
+          "Jogo de cartas"
+        ]
+      },
+      "calcados_texteis": {
+        "corredor": "C7H",
+        "lado": "ESQ",
+        "exemplos_de_produtos": [
+          "Chinelo",
+          "Meia",
+          "Sandália",
+          "Calçado básico",
+          "Toalha"
+        ]
+      },
+      "congelados_gerais": {
+        "corredor": "ilha_congelados",
+        "lado": "ilha (Avenida Central)",
+        "exemplos_de_produtos": [
+          "Nuggets",
+          "Hambúrguer congelado",
+          "Empanado de frango",
+          "Pizza congelada",
+          "Lasanha congelada"
+        ]
+      },
+      "frango_carne_congelados": {
+        "corredor": "C9H",
+        "lado": "DIR",
+        "exemplos_de_produtos": [
+          "Frango congelado inteiro",
+          "Peito de frango congelado",
+          "Carne moída congelada"
+        ]
+      },
+      "sorvetes": {
+        "corredor": "C1H",
+        "lado": "DIR",
+        "exemplos_de_produtos": ["Sorvete pote", "Picolé", "Açaí congelado"]
+      },
+      "iogurte_lacteos": {
+        "local": "geladeira_direita_fundo",
+        "exemplos_de_produtos": [
+          "Iogurte",
+          "Yakult",
+          "Danoninho",
+          "Bebida láctea",
+          "Pudim gelado"
+        ]
+      },
+      "verduras_folhas_geladeira": {
+        "local": "geladeira_direita_sul",
+        "exemplos_de_produtos": [
+          "Alface",
+          "Rúcula",
+          "Brócolis",
+          "Espinafre",
+          "Couve",
+          "Folhas embaladas"
+        ]
+      },
+      "bebidas_frias": {
+        "local": "geladeira_esquerda",
+        "exemplos_de_produtos": [
+          "Cerveja gelada",
+          "Refrigerante gelado",
+          "Suco gelado",
+          "Água gelada",
+          "Energético gelado",
+          "Ice"
+        ]
+      },
+      "frango_bandeja_pao_alho": {
+        "local": "geladeira_esquerda_fundo",
+        "exemplos_de_produtos": [
+          "Frango em bandeja",
+          "Pão de alho congelado",
+          "Pão de alho pronto"
+        ]
+      },
+      "racoes_pet": {
+        "corredor": "C7H",
+        "lado": "DIR",
+        "observacao": "Produtos pet ficam no corredor de não-alimentícios (C7H), lado direito, junto com eletrônicos e utilidades.",
+        "exemplos_de_produtos": [
+          "Ração para cachorro",
+          "Ração para gato",
+          "Petisco pet",
+          "Areia para gato",
+          "Coleira"
+        ]
+      },
+      "acougue_carnes_frescas": {
+        "local": "area_fundo_acougue",
+        "exemplos_de_produtos": [
+          "Picanha",
+          "Costela",
+          "Fraldinha",
+          "Alcatra",
+          "Filé mignon",
+          "Carne para churrasco",
+          "Linguiça fresca"
+        ]
+      },
+      "padaria_confeitaria": {
+        "local": "area_fundo_padaria",
+        "exemplos_de_produtos": [
+          "Pão francês",
+          "Croissant",
+          "Bolo de aniversário",
+          "Torta",
+          "Pão de queijo",
+          "Coxinha",
+          "Esfirra"
+        ]
+      },
+      "frios_queijos": {
+        "local": "ilha_frios",
+        "exemplos_de_produtos": [
+          "Queijo prato",
+          "Mussarela fatiada",
+          "Presunto",
+          "Salame",
+          "Mortadela",
+          "Peito de peru"
+        ]
+      },
+      "hortifruti_frutas_legumes": {
+        "local": "area_fundo_hortifruti",
+        "exemplos_de_produtos": [
+          "Maçã",
+          "Banana",
+          "Laranja",
+          "Tomate",
+          "Cebola",
+          "Batata",
+          "Cenoura",
+          "Limão",
+          "Manga",
+          "Uva"
+        ]
+      },
+      "comida_japonesa": {
+        "local": "ilha_japonesa",
+        "exemplos_de_produtos": [
+          "Sushi",
+          "Temaki",
+          "Hot roll",
+          "Yakisoba",
+          "Missoshiru",
+          "Molho shoyu embalado"
+        ]
+      }
+    }
+  },
+
+  "rotas_canonicas": {
+    "entrada_para_c1h": "Entrada → Avenida dos Caixas (sentido norte/fundo) → Avenida Central → virar à DIREITA → C1H imediatamente à direita.",
+    "entrada_para_corredor_alto_proximo": "Entrada → Avenida dos Caixas → Avenida Central → virar à direita e contar corredores da direita para esquerda.",
+    "entrada_para_corredor_alto_distante": "Entrada → Avenida dos Caixas → Avenida Central → seguir à esquerda contando corredores.",
+    "entrada_para_corredor_baixo": "Entrada → Avenida dos Caixas → entrar no corredor pelo lado sul. C3L = primeiro à direita, C4L = segundo, etc.",
+    "entrada_para_geladeira_direita": "Entrada → virar à direita → caminhar pela parede direita. Norte (fundo) = iogurtes. Sul (entrada) = verduras.",
+    "entrada_para_geladeira_esquerda": "Entrada → Avenida dos Caixas atravessando toda a loja → parede esquerda. Destino mais distante — deixar para o final da rota.",
+    "entrada_para_fundo": "Entrada → Avenida dos Caixas → Avenida Central → entrar em qualquer corredor alto → subir até saída norte → área do fundo.",
+    "entrada_para_hortifruti": "Entrada → Avenida dos Caixas em direção ao canto direito → Hortifruti no canto direito do fundo.",
+    "mesmo_corredor_dois_itens": "Após pegar o primeiro item: 'Ainda no mesmo corredor, ao seu lado [esquerdo/direito]...'",
+    "erro_a_evitar": "NUNCA mandar o usuário para o lado oposto da loja sem necessidade. NUNCA referenciar C1L ou C2L."
+  }
+}
