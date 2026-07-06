@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Button,
-  Card,
-  CardDescription,
-  Spinner,
-  TextArea,
-} from "@heroui/react";
+import { Button, Spinner, TextArea } from "@heroui/react";
 import { useState } from "react";
 import { SelectMarket } from "../select-market";
 import { CardtTest } from "../card";
@@ -52,34 +46,101 @@ export default function RequestForm() {
   if (currentState === "form") {
     return (
       <form
-        className="max-w-100 md:max-w-280 animate-fade-right animate-duration-[300ms] animate-ease-linear"
+        className="w-full max-w-2xl mx-auto flex flex-col h-[calc(100vh-140px)] relative animate-fade-in animate-duration-300"
         onSubmit={handleSubmit(submit)}
       >
-        <CardtTest market={market!} />
-        {chatHistory.map((chat) => (
-          <div
-            key={chat.id}
-            className={`flex mb-4 ${
-              chat.isMe ? "justify-end" : "justify-start"
-            }`}
-          >
-            <Card
-              className={`max-w-[80%]  ${chat.isMe ? "bg-accent rounded-br-none text-white animate-fade-left animate-duration-200 animate-ease-out" : "rounded-bl-none animate-fade-right animate-duration-200 animate-ease-out"}`}
-            >
-              <CardDescription
-                className={`${chat.isMe && "bg-accent rounded-br-none text-white"}`}
-              >
-                {chat.message}
-              </CardDescription>
-            </Card>
-          </div>
-        ))}
+        {/* Fixed Header (Badge) */}
+        <div className="shrink-0 pt-2 pb-4">
+          <CardtTest market={market!} />
+        </div>
 
+        {/* Scrollable Chat Area */}
+        <div className="flex-1 overflow-y-auto pb-32 px-2 md:px-4 space-y-6 scrollbar-hide">
+          {chatHistory.map((chat) => (
+            <div
+              key={chat.id}
+              className={`flex w-full ${
+                chat.isMe ? "justify-end" : "justify-start"
+              }`}
+            >
+              <div
+                className={`max-w-[85%] md:max-w-[75%] px-4 py-3 shadow-sm ${
+                  chat.isMe
+                    ? "bg-blue-500 text-primary-foreground rounded-2xl rounded-br-sm animate-fade-left animate-duration-300 animate-ease-out"
+                    : "bg-default-100 text-foreground rounded-2xl rounded-bl-sm animate-fade-right animate-duration-300 animate-ease-out"
+                }`}
+              >
+                <p className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">
+                  {chat.message}
+                </p>
+              </div>
+            </div>
+          ))}
+
+          {loading && (
+            <div className="flex justify-start">
+              <div className="max-w-[85%] px-4 py-3 bg-default-100 rounded-2xl rounded-bl-sm animate-fade-right animate-duration-300 animate-ease-out">
+                <div className="flex gap-1.5 items-center h-6 px-1">
+                  <span className="w-2 h-2 rounded-full bg-default-400 animate-bounce"></span>
+                  <span
+                    className="w-2 h-2 rounded-full bg-default-400 animate-bounce"
+                    style={{ animationDelay: "0.15s" }}
+                  ></span>
+                  <span
+                    className="w-2 h-2 rounded-full bg-default-400 animate-bounce"
+                    style={{ animationDelay: "0.3s" }}
+                  ></span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {(!route || route.length < 1) && (
+          <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-2xl pt-10 pb-6 px-4 bg-gradient-to-t from-background via-background/90 to-transparent z-40">
+            <div className="relative flex items-end gap-2 bg-default-100/50 backdrop-blur-md p-2 rounded-3xl border border-white/5 shadow-lg">
+              <TextArea
+                aria-label="Lista de compras"
+                min={1}
+                max={4}
+                variant="secondary"
+                className="flex-grow bg-transparent shadow-none hover:bg-transparent focus-within:!bg-transparent group-data-[focus=true]:bg-transparent"
+                placeholder="Insira aqui sua lista de compras..."
+                {...register("prompt")}
+                disabled={!!errors.prompt}
+              />
+              <Button
+                isIconOnly
+                variant="primary"
+                type="submit"
+                className="mb-[6px] mr-1 shrink-0 h-10 w-10 shadow-md rounded-full"
+                isDisabled={loading}
+              >
+                {loading ? (
+                  <Spinner size="sm" color="current" />
+                ) : (
+                  <ArrowRight />
+                )}
+              </Button>
+            </div>
+            {errors.prompt && (
+              <div className="text-center mt-1">
+                <span className="text-xs text-danger font-medium">
+                  {errors.prompt.message as string}
+                </span>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Floating Action Buttons (When route is active) */}
         {route && route.length > 0 && currentIndex < route.length && (
-          <>
+          <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-2xl pt-10 pb-6 px-4 bg-gradient-to-t from-background via-background/90 to-transparent z-40 flex justify-center">
             {hasStarted ? (
               <Button
-                className={"w-full bg-blue-600 text-white"}
+                variant="primary"
+                size="lg"
+                className="w-full max-w-sm font-medium shadow-primary/30 h-14 text-base"
                 onClick={() => markItemAsFound(false)}
               >
                 {route[currentIndex]?.item
@@ -88,7 +149,9 @@ export default function RequestForm() {
               </Button>
             ) : (
               <Button
-                className={"w-full text-white"}
+                variant="primary"
+                size="lg"
+                className="w-full max-w-sm font-medium shadow-primary/30 h-14 text-base"
                 onClick={() => {
                   setHasStarted(true);
                   markItemAsFound(true);
@@ -97,37 +160,6 @@ export default function RequestForm() {
                 Iniciar trajeto
               </Button>
             )}
-          </>
-        )}
-
-        {loading && (
-          <Card className="pulse my-5 animate-fade-right animate-duration-200 animate-ease-out">
-            <CardDescription>
-              Um momento, sua rota está sendo gerada...
-            </CardDescription>
-          </Card>
-        )}
-        {(!route || route.length < 1) && (
-          <div className="relative w-81 h-32 ">
-            <TextArea
-              aria-label="Quick project update"
-              className={`h-full w-full ${errors.prompt && "border border-red-400"}`}
-              placeholder="Manda Bala na lista do supermercado..."
-              {...register("prompt")}
-            />
-            {errors.prompt && (
-              <p className="text-xs text-red-400 font-medium">
-                {errors.prompt?.message}
-              </p>
-            )}
-            <Button
-              variant="primary"
-              type="submit"
-              className="absolute bottom-3 right-3"
-              isDisabled={loading}
-            >
-              {loading ? <Spinner color="current" size="sm" /> : <ArrowRight />}
-            </Button>
           </div>
         )}
       </form>

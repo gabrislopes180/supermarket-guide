@@ -1,5 +1,6 @@
 import { Button, Key, Label, ListBox, Select } from "@heroui/react";
 import { useState } from "react";
+import { ArrowRight } from "@gravity-ui/icons";
 
 interface SelectMarketProps {
   onContinue: (marketId: string) => void;
@@ -7,22 +8,31 @@ interface SelectMarketProps {
 export function SelectMarket({ onContinue }: SelectMarketProps) {
   const [selectedMarket, setSelectedMarket] = useState<Key | null>(null);
 
-  // Função intermediária para checar e enviar o dado ao pai
   const handleContinue = () => {
     if (selectedMarket) {
       onContinue(selectedMarket.toString());
     }
   };
+
   return (
-    <>
+    <div className="flex flex-col items-center justify-center w-full max-w-sm mx-auto space-y-8 animate-fade-up animate-duration-500 animate-ease-out">
+      <div className="text-center space-y-2">
+        <h2 className="text-2xl font-semibold tracking-tight">
+          Onde vamos comprar?
+        </h2>
+        <p className="text-default-500 text-sm">
+          Escolha o supermercado para traçarmos a rota ideal.
+        </p>
+      </div>
+
       <Select
-        className="w-[256px] animate-fade-right animate-duration-[300ms] animate-ease-linear"
-        placeholder="Select one"
+        className="w-full"
+        placeholder="Selecione um mercado"
         value={selectedMarket}
         onChange={setSelectedMarket}
       >
-        <Label>Selecione o mercado</Label>
-        <Select.Trigger>
+        <Label className="sr-only">Selecione o mercado</Label>
+        <Select.Trigger className="h-14 bg-default-100 hover:bg-default-200 transition-colors">
           <Select.Value />
           <Select.Indicator />
         </Select.Trigger>
@@ -37,12 +47,14 @@ export function SelectMarket({ onContinue }: SelectMarketProps) {
       </Select>
 
       <Button
-        variant="secondary"
+        variant="primary"
+        size="lg"
+        className="w-full font-medium"
         onClick={handleContinue}
         isDisabled={!selectedMarket}
       >
-        Prosseguir
+        Prosseguir <ArrowRight />
       </Button>
-    </>
+    </div>
   );
 }

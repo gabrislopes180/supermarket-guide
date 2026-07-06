@@ -22,35 +22,6 @@ export const useRequestPrompt = () => {
     clearChat,
   } = useShoppingStore();
 
-  // const res: PromptResponse = {
-  //   message: "Rota otimizada com sucesso!",
-  //   mercado: "Supermercado Principal",
-  //   rota: {
-  //     message: "Rota otimizada com sucesso!",
-  //     mercado: "Supermercado Principal",
-  //     explicacao:
-  //       "A rota foi planejada para iniciar no centro da loja e seguir em direção ao lado esquerdo, o ponto mais distante da entrada, minimizando o trajeto de retorno.",
-  //     rota: [
-  //       {
-  //         item: "nuggets",
-  //         corredor_destino: "ilha_congelados",
-  //         instrucao:
-  //           "Da entrada, siga pela Avenida dos Caixas em direção ao fundo da loja. Ao chegar na Avenida Central, a ilha de congelados estará à sua direita, próxima ao C3L. Os nuggets ficam na ilha, no lado esquerdo.",
-  //         status: "pendente",
-  //       },
-  //       {
-  //         item: "suco de uva",
-  //         corredor_destino: "geladeira_esquerda",
-  //         instrucao:
-  //           "Após pegar os nuggets, continue reto pela Avenida Central no sentido da parede esquerda da loja. Ao chegar na parede, você verá a geladeira das bebidas frias. O suco de uva, parte das bebidas frias em geral, estará no lado mais próximo à entrada (sul) dessa geladeira.",
-  //         status: "pendente",
-  //       },
-  //     ],
-  //   },
-  //   explicacao:
-  //     "Olá! Serei seu GPS pessoal neste supermercado. Usaremos o termo 'Avenida' para os corredores amplos por onde se atravessa a loja, como o espaço entre os caixas e os corredores baixos, ou entre os corredores baixos e os altos. Os 'corredores baixos' são os primeiros corredores com produtos que você verá ao entrar, estendendo-se até a parte inicial da loja. Já os 'corredores altos' ficam após a Avenida Central, sendo a segunda leva de corredores, localizados na parte mais ao fundo/norte do mercado. Um aviso importante: a organização das prateleiras e setores pode mudar. Faremos o possível para ser o mais preciso, mas o produto pode estar na direita ou esquerda, ou ter mudado de corredor.",
-  // };
-
   useEffect(() => {
     initChat();
   }, [initChat]);
@@ -91,13 +62,14 @@ export const useRequestPrompt = () => {
       const res: PromptResponse = await req.json();
 
       if (!req.ok) {
-        throw new Error(res.message || "Erro retornado pelo servidor.");
+        throw new Error("Erro no servidor ao gerar rota.");
       }
 
       if (!res.rota || res.rota.rota.length === 0) {
         throw new Error(res.message || "A rota retornada está vazia.");
       }
 
+      console.log("Oq vem do res: ", res.rota.rota);
       setRouteData(res.rota.rota);
 
       if (res.explicacao) {

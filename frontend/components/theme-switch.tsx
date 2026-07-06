@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import clsx from "clsx";
 
-import { SunFilledIcon, MoonFilledIcon } from "@/components/icons";
+import { Sun, Moon } from "@gravity-ui/icons";
 
 export interface ThemeSwitchProps {
   className?: string;
@@ -22,7 +22,6 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
     setIsMounted(true);
   }, []);
 
-
   if (!isMounted) return <div aria-hidden className="w-6 h-6" />;
 
   return (
@@ -36,7 +35,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
       )}
       onClick={handleToggle}
     >
-      {isLight ? <SunFilledIcon size={22} /> : <MoonFilledIcon size={22} />}
+      {isLight ? <Sun /> : <Moon />}
     </button>
   );
 };
