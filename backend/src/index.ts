@@ -6,7 +6,6 @@ import dotenv from "dotenv";
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import {} from "../../backend/src/";
-import { countItens } from "./utils/count-itens";
 
 const app = express();
 
