@@ -9,7 +9,7 @@ import {} from "../../backend/src/";
 
 const app = express();
 
-const PORT = process.env.PORT || 8000;
+const PORT = Number(process.env.PORT) || 8000;
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -92,6 +92,6 @@ app.post("/api/route-list", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
 });
