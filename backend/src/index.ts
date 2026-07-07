@@ -11,8 +11,24 @@ const app = express();
 
 const PORT = process.env.PORT || 8000;
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://supermarket-guide.vercel.app",
+];
+
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean) => void,
+  ) => {
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Não permitido pelo CORS"));
+    }
+  },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
