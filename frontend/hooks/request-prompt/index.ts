@@ -49,16 +49,19 @@ export const useRequestPrompt = () => {
     reset();
 
     try {
-      const req = await fetch("http://localhost:8000/api/route-list", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const req = await fetch(
+        "https://supermarket-guide-backend.onrender.com/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            mercadoId: data.market,
+            listaTexto: data.prompt,
+          }),
         },
-        body: JSON.stringify({
-          mercadoId: data.market,
-          listaTexto: data.prompt,
-        }),
-      });
+      );
       const res: PromptResponse = await req.json();
 
       if (!req.ok) {
