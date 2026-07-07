@@ -50,7 +50,7 @@ export const useRequestPrompt = () => {
 
     try {
       const req = await fetch(
-        "https://supermarket-guide-backend.onrender.com/",
+        "https://supermarket-guide-backend.onrender.com/api/route-list",
         {
           method: "POST",
           headers: {
